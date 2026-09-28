@@ -1,0 +1,5 @@
+{
+  "runtime.version": "LuaJIT",
+  "diagnostics.globals": ["wow", "tactics", "bit"],
+  "diagnostics.disable": ["unused-local"]
+}

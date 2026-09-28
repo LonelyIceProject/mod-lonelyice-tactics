@@ -1,0 +1,27 @@
+## Interface: 30300
+## Title: Party (Bot Tactics)
+## Title-ruRU: Отряд
+## Notes: Party window for your bots: group orders, roster, tactics (gambits), spellbook, equipment, bags, talents, style. /party, /tactics or /bt
+## Notes-ruRU: Окно отряда для ваших ботов: приказы группе, состав, тактика (гамбиты), книга, снаряжение, сумки, таланты, стиль. /party, /tactics или /bt
+## Author: LonelyIceProject
+## Version: 2.0
+## SavedVariables: BotTacticsDB
+
+Locale.lua
+Util.lua
+Transport.lua
+Protocol.lua
+Widgets.lua
+Party.lua
+Editor.lua
+Picker.lua
+Feedback.lua
+Bags.lua
+MirrorUI.lua
+Misc.lua
+TalentData.lua
+Gear.lua
+Talents.lua
+Book.lua
+Style.lua
+Core.lua

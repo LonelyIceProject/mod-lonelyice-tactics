@@ -1,0 +1,184 @@
+#
+# mod-lonelyice-tactics: Bot Tactics (gambits for the bots of a real player's party).
+# Behaviour lives in the Lua scripts of Tactics.ScriptDir (init.lua).
+#
+
+[worldserver]
+
+########################################
+# Bot Tactics configuration
+########################################
+#
+#    Tactics.Enable
+#        Description: Master switch. 0 = the tactics trigger is always false and the Lua host stays idle.
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled)
+#
+
+Tactics.Enable = 1
+
+#
+#    Tactics.ScriptDir
+#        Description: Directory that contains init.lua. Relative paths are resolved against the
+#                     worldserver working directory. Change scripts and use ".tactics reload".
+#        Default:     "" - lua/tactics of the plugin folder, or lua_scripts/tactics in a static build
+#
+
+Tactics.ScriptDir = ""
+
+#
+#    Tactics.Relevance
+#        Description: Relevance of the playerbots action "tactics". Class AI tops out at 93;
+#                     flee/say/drop target are 99, chat commands 100, pull 105-107.
+#                     Dungeon/raid mechanics always win via the mechanics guard, not via this number.
+#        Default:     95
+#
+
+Tactics.Relevance = 95
+
+#
+#    Tactics.MaxCandidates
+#        Description: Maximum number of decisions read from one tactics.evaluate() result.
+#        Default:     4
+#
+
+Tactics.MaxCandidates = 4
+
+#
+#    Tactics.InstructionLimit
+#        Description: Lua VM instruction limit per tactics.evaluate() call (per bot per tick).
+#        Default:     200000
+#
+
+Tactics.InstructionLimit = 200000
+
+#
+#    Tactics.MessageInstructionLimit
+#        Description: Lua VM instruction limit per tactics.on_message(), tactics.on_event() and script load.
+#        Default:     5000000
+#
+
+Tactics.MessageInstructionLimit = 5000000
+
+#
+#    Tactics.MemoryLimitMB
+#        Description: Memory cap of one Lua state in MB. A state above the cap is dropped and rebuilt.
+#        Default:     64
+#
+
+Tactics.MemoryLimitMB = 64
+
+#
+#    Tactics.Jit
+#        Description: LuaJIT compiler. With the JIT on, the instruction limit becomes best effort
+#                     (count hooks do not fire inside compiled traces).
+#        Default:     0 - (Interpreter only, exact instruction limit)
+#                     1 - (JIT on)
+#
+
+Tactics.Jit = 0
+
+#
+#    Tactics.ExtraMechanicsStrategies
+#        Description: Comma-separated strategy names that are treated as mechanics in addition to all
+#                     dungeon and raid strategies. While one of their triggers is active, or one of their
+#                     default actions (e.g. "avoid aoe") is useful and possible, gambits are skipped.
+#        Default:     "avoid aoe"
+#
+
+Tactics.ExtraMechanicsStrategies = "avoid aoe"
+
+#
+#    Tactics.ErrorLogIntervalMs
+#        Description: Rate limit for Lua error logs: one log per distinct message per interval (ms).
+#        Default:     10000
+#
+
+Tactics.ErrorLogIntervalMs = 10000
+
+#
+#    Tactics.Debug
+#        Description: Log every decision and primitive result.
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+#
+
+Tactics.Debug = 0
+
+#
+#    Tactics.TraceSize
+#        Description: Number of recent class-AI decisions kept per owned bot for the "AI log" of the
+#                     party window (decision trace, bot:trace()). 0 disables recording.
+#        Default:     24
+#
+
+Tactics.TraceSize = 24
+
+#
+#    Tactics.VetoTargetTtlMs
+#        Description: How long (ms) a per-spell "only on <target>" rule keeps the target resolved by
+#                     the Lua scripts. After that the class AI is denied the spell until Lua refreshes it.
+#        Default:     3000
+#
+
+Tactics.VetoTargetTtlMs = 3000
+
+#
+#    Tactics.SimTickMs
+#        Description: Headless bot simulation (".tactics sim", bot-sim-design): how often (ms) the
+#                     world thread calls the Lua scenario driver while a simulation runs. Minimum 50.
+#        Default:     250
+#
+
+Tactics.SimTickMs = 250
+
+#
+#    Tactics.SimDir
+#        Description: Folder for the simulation CSV reports. Empty = "<LogsDir>/sim".
+#        Default:     ""
+#
+
+Tactics.SimDir = ""
+
+#
+#    Tactics.ManualKeepStrategies
+#        Description: Manual mode ("only my rules", bot:setManual, abilities-mirroring-spec 3.2): the
+#                     class AI keeps running the actions of these strategies (life support); every other
+#                     class-AI action of the bot is suppressed while a real player owns it. Dungeon/raid
+#                     mechanics strategies and "tactics" are always kept. Note: "nc" is the CLASS non-combat
+#                     strategy (buffs, out-of-combat heals) and is deliberately not in the list; mounting and
+#                     packet reactions (taxi, release, turn-in query) live in "default"; "quest" accepts
+#                     shared/NPC quests and turns them in when the owner talks to the quest giver (quest
+#                     mirroring for manual-mode bots, non-combat only).
+#        Default:     "chat,default,follow,food,loot,mount,formation,stay,cast time,avoid aoe,dead,quest"
+#
+
+Tactics.ManualKeepStrategies = "chat,default,follow,food,loot,mount,formation,stay,cast time,avoid aoe,dead,quest"
+
+#
+#    Tactics.ManualKeepOptional
+#        Description: Kept in manual mode as well unless the addon's "strict" checkbox is on (Lua then passes
+#                     its own keep list to bot:setManual, {} = none).
+#        Default:     "potions,racials"
+#
+
+Tactics.ManualKeepOptional = "potions,racials"
+
+#
+#    Tactics.Mirror.Enable
+#        Description: Report what a real player does (quests, flights, teleports, vendors, trainers) to the
+#                     Lua scripts (tactics.on_mirror) so the party bots can follow suit (mirror.lua).
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled)
+#
+
+Tactics.Mirror.Enable = 1
+
+#
+#    Tactics.Mirror.Radius
+#        Description: Yards around the player within which bots join vendor / repair / trainer visits
+#                     (read by Lua through wow.mirrorConfig()). 5..100.
+#        Default:     30
+#
+
+Tactics.Mirror.Radius = 30

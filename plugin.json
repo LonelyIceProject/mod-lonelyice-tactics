@@ -1,0 +1,20 @@
+{
+  "format": 1,
+  "id": "lonelyice.tactics",
+  "version": "1.0.0",
+  "name": { "en": "Bot tactics", "ru": "Тактики ботов" },
+  "description": {
+    "en": "Gambit-style orders, party window and ability mirroring for the bots in your party, scripted in Lua.",
+    "ru": "Приказы в стиле гамбитов, окно отряда и повтор способностей для ботов вашей группы, на Lua."
+  },
+  "authors": [ "LonelyIceProject" ],
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://github.com/LonelyIceProject/mod-lonelyice-tactics",
+  "core": { "abi": "lonelyice-ac-1" },
+  "platforms": [ "windows-x64" ],
+  "depends": { "playerbots": ">=1.0.0" },
+  "server": { "library": "lonelyice_tactics" },
+  "databases": { "characters": "data/sql/db-characters" },
+  "config": "conf/mod_lonelyice_tactics.conf.dist",
+  "client": { "addons": [ "client/addons/BotTactics" ] }
+}
