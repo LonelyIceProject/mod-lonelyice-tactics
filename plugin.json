@@ -16,5 +16,6 @@
   "server": { "library": "lonelyice_tactics" },
   "databases": { "characters": "data/sql/db-characters" },
   "config": "conf/mod_lonelyice_tactics.conf.dist",
+  "settings": "settings.json",
   "client": { "addons": [ "client/addons/BotTactics" ] }
 }

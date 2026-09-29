@@ -1,0 +1,18 @@
+{
+  "group": { "en": "Tactics", "ru": "Тактики" },
+  "hint": { "en": "Orders for the bots of your party", "ru": "Приказы для ботов вашей группы" },
+  "fields": [
+    { "key": "Tactics.Enable", "type": "bool", "apply": "restart",
+      "label": { "en": "Tactics enabled", "ru": "Тактики включены" } },
+    { "key": "Tactics.Relevance", "type": "int", "min": 1, "max": 200, "apply": "restart",
+      "label": { "en": "Priority over the class AI", "ru": "Приоритет над классовым ИИ" },
+      "hint": { "en": "Class AI tops out at 93; mechanics always win", "ru": "Классовый ИИ не выше 93; механики боссов важнее всегда" } },
+    { "key": "Tactics.Jit", "type": "bool", "apply": "restart",
+      "label": { "en": "LuaJIT compiler", "ru": "Компилятор LuaJIT" },
+      "hint": { "en": "Faster, but the instruction limit becomes approximate", "ru": "Быстрее, но лимит инструкций становится приблизительным" } },
+    { "key": "Tactics.TraceSize", "type": "int", "min": 0, "max": 200, "apply": "restart",
+      "label": { "en": "AI log entries per bot", "ru": "Записей в журнале ИИ на бота" } },
+    { "key": "Tactics.Debug", "type": "bool", "apply": "restart",
+      "label": { "en": "Log every decision", "ru": "Писать каждое решение в лог" } }
+  ]
+}
