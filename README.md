@@ -51,6 +51,13 @@ the Lua scripts (default: `lua/tactics` of the plugin, `lua_scripts/tactics` in 
 
 `client/addons/BotTactics` goes into the game's `Interface/AddOns`. LonelyIce installs it; by hand:
 `tools/install_addon.ps1 -Client "<game folder>"`.
+## Support
+
+LonelyIce is free, with no ads and no paid features. If it is useful to you, you can
+[buy me a coffee](https://buymeacoffee.com/darthgelum): it pays for the server, code signing and development time.
+
+<a href="https://buymeacoffee.com/darthgelum"><img src=".github/buy-me-a-coffee.png" alt="Buy me a coffee" width="303"></a>
+
 ## License
 
 GNU General Public License v2.0 or later, see [LICENSE](LICENSE). Part of the
