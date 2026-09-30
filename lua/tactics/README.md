@@ -11,7 +11,7 @@ bot-tactics-spec, and the `wow` / `Unit` / `Bot` API is listed in its section 3.
 | file | what it does |
 |---|---|
 | `init.lua` | Entry point. Sets `tactics.evaluate`, `tactics.on_message` and `tactics.on_event`. |
-| `config.lua` | Constants: slots per level, the level for the second condition, preset limits, FIRED rate limits, `DEBUG`. |
+| `config.lua` | Constants: rule slots (no level gates: all slots and the second condition at every level), preset limits, FIRED rate limits, `DEBUG`. |
 | `catalog.lua` | Ids, level gates and ru/en labels for targets, conditions, special actions, item categories, dispel types and server messages. The addon gets all of it in `CAT`. |
 | `targets.lua` | Target selectors: `function(env) -> {units in preference order}`. |
 | `conditions.lua` | Conditions: `check(env, unit, value)`, plus optional `sort` and `allowDead`. |
@@ -139,7 +139,7 @@ not in `store.LEADER_KEYS`). Vars: `mirror_log_1..20`, `mirror_log_head`, `mirro
    ```
    `param` is `"none"`, `"num"` (also set `default`, `min`, `max` and optionally `unit`), `"spell"` (a spell
    from the bot's book, aura picker), `"spellid"` (any spell id, e.g. an enemy cast: typed or pasted as a
-   link in the editor), `"dispel"` or `"enum"`. `lvl` is the bot level needed to use the condition.
+   link in the editor), `"dispel"` or `"enum"`. `lvl` is the bot level needed to use the condition (currently 0 for every entry).
 2. In `conditions.lua`, add its logic:
    ```lua
    conditions.moving = {

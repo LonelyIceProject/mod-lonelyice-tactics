@@ -298,7 +298,8 @@ function coord.say(env, calloutId, args, now)
     local st = env.state or {}
     local dt = st.cl and now - st.cl
     if dt and dt >= 0 and dt < cfg(p, "SAY_MIN_MS") then return false end
-    if (st.cn or 0) >= cfg(p, "SAY_FIGHT_MAX") then return false end
+    local fightMax = cfg(p, "SAY_FIGHT_MAX") or 0
+    if fightMax > 0 and (st.cn or 0) >= fightMax then return false end
     local ck = "cc" .. e.index
     dt = st[ck] and now - st[ck]
     if dt and dt >= 0 and dt < cfg(p, "SAY_REPEAT_MS") then return false end

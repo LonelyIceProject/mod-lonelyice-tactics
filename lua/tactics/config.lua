@@ -7,11 +7,9 @@ local config = {}
 config.PROTO = "1"                -- HELLO\t<proto> the addon must send
 config.CAT_VERSION = "1"          -- first field of the CAT message
 
--- Progression (spec 4.4) --------------------------------------------------------------------------
-config.SLOT_BASE = 3              -- rule slots available from level 0
-config.SLOT_PER_LEVELS = 10       -- one more slot every N levels
-config.SLOT_MAX = 11              -- hard cap of rule slots
-config.COND2_LEVEL = 60           -- second condition per rule unlocks at this level
+-- Rule slots (spec 4.4): no level gates, every slot and the second condition are always available ---
+config.SLOT_MAX = 11              -- rule slots per list
+config.COND2_LEVEL = 0            -- level of the second condition per rule (still sent in PARTY)
 config.MAX_PRESETS = 5            -- named rule sets per bot (store keys p1..pN)
 config.PRESET_NAME_MAX = 24       -- UTF-8 characters
 
@@ -49,8 +47,8 @@ config.PREMADE_MAX_ENTRIES = 512  -- entries of one premade spec merged by talen
 -- AI layer on top of the rules (ai-layer-spec 12) ----------------------------------------------
 config.AI_SLOT = 98               -- decision slot of the free layer (never a rule number; 99 = order)
 config.AI_DEFAULT = 2             -- slider when the store has no "ai" key
-config.AI_LVL_PARTNER = 20        -- slider 2 available from this level
-config.AI_LVL_OWN = 40            -- slider 3
+config.AI_LVL_PARTNER = 0         -- slider 2 available from this level (no gate)
+config.AI_LVL_OWN = 0             -- slider 3 (no gate)
 config.AI_THRESHOLD = { [1] = 0.60, [2] = 0.40, [3] = 0.25 }
 config.AI_DELAY_MS = { [1] = 600, [2] = 400, [3] = 200 }
 config.AI_HYST = 15               -- hysteresis points above the engage threshold
@@ -63,7 +61,7 @@ config.AI_FOCUS_MIN_MS = 6000     -- focus_target switches at most this often
 config.AI_POSITION_MIN_MS = 3000
 config.AI_RESERVE_TRASH = 35      -- mana reserve %
 config.AI_RESERVE_BOSS = 15
-config.AI_TREND_MS = 500          -- trend sample period (level >= 60)
+config.AI_TREND_MS = 500          -- trend sample period
 config.AI_TREND_DROP = 15         -- avg group hp drop over 3 s = "fight goes badly"
 config.AI_TREND_SPAN_MS = 2500    -- minimum time between the oldest and newest trend sample
 config.AI_TREND_SAMPLES = 6
@@ -73,10 +71,11 @@ config.AI_KIT_TTL_MS = 10000
 config.AI_SCAN_RANGE = 40         -- yards: dispel / heal_priority consider group members this close only
 config.AI_DISPEL_SCAN_MAX = 10    -- dispel reads auras() of at most this many members per tick (raids)
 config.AI_PROFILE_STYLE_MS = 5000
-config.AI_INTENT_LEVEL = { preserve_self = 1, interrupt = 10, dispel = 10, focus_target = 20, heal_priority = 20,
-                           position = 30, cooldown_burst = 40, mana_economy = 10 }
-config.AI_TREND_LEVEL = 60
-config.AI_AOE_LEVEL = 40          -- slider 3 auto aoe needs this level
+-- Level gates of the AI layer: all 0 (every intent and feature at every level)
+config.AI_INTENT_LEVEL = { preserve_self = 0, interrupt = 0, dispel = 0, focus_target = 0, heal_priority = 0,
+                           position = 0, cooldown_burst = 0, mana_economy = 0 }
+config.AI_TREND_LEVEL = 0         -- group hp trend and ai-3 foresight
+config.AI_AOE_LEVEL = 0           -- slider 3 auto aoe
 config.AI_WATCH = { tank = 60, ally = 45, self = 35 }   -- default observation thresholds (profile 3.2)
 config.AI_WATCH_FORESIGHT = 15    -- ai 3, level >= AI_TREND_LEVEL: watch thresholds this much higher (cap 85)
 config.AI_WATCH_CAP = 85
@@ -96,11 +95,11 @@ config.AI_COORD_SAY_PCT = { [2] = 50, [3] = 70 }       -- claims said aloud (the
 config.AI_COORD_DEFER = { [2] = 0.35, [3] = 0.25 }     -- urgency factor of a job someone else took
 config.AI_COORD_SEE_RANGE = 20    -- yards: an unspoken claim is seen by bots this close to the claimer
 config.AI_COORD_SEE_MS = 900
-config.AI_COORD_YOUNG_MS = 300    -- extra latency below level 40
+config.AI_COORD_YOUNG_MS = 0      -- extra latency below level 40 (off: every level is equal)
 config.AI_COORD_CLAIM_MS = 2500
 config.AI_COORD_FLAG_MS = 8000
 config.AI_SAY_MIN_MS = 8000       -- per bot: gap between two callouts
-config.AI_SAY_FIGHT_MAX = 3       -- per bot and fight
+config.AI_SAY_FIGHT_MAX = 0       -- per bot and fight; 0 = no limit
 config.AI_SAY_REPEAT_MS = 15000   -- the same callout id
 config.AI_SAY_PARTY_MAX = 3       -- per party and 10 s window
 config.AI_SAY_MAX_BYTES = 120
@@ -108,17 +107,14 @@ config.AI_SAY_MAX_BYTES = 120
 -- Debug: 1 = wow.log every evaluate result (very noisy)
 config.DEBUG = false
 
--- Slots available at a level.
+-- Slots available at a level (every level has all of them).
 function config.slots(level)
-    local n = config.SLOT_BASE + math.floor((level or 0) / config.SLOT_PER_LEVELS)
-    if n > config.SLOT_MAX then n = config.SLOT_MAX end
-    return n
+    return config.SLOT_MAX
 end
 
 -- Level at which slot k (1-based) unlocks.
 function config.slotUnlock(k)
-    if k <= config.SLOT_BASE then return 0 end
-    return config.SLOT_PER_LEVELS * (k - config.SLOT_BASE)
+    return 0
 end
 
 -- "0:0:0:10:20:..." for the PARTY message.
