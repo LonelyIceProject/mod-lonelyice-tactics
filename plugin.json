@@ -1,7 +1,7 @@
 {
   "format": 1,
   "id": "lonelyice.tactics",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "name": { "en": "Bot tactics", "ru": "Тактики ботов" },
   "description": {
     "en": "Gambit-style orders, party window and ability mirroring for the bots in your party, scripted in Lua.",
@@ -10,6 +10,7 @@
   "authors": [ "LonelyIceProject" ],
   "license": "GPL-2.0-or-later",
   "homepage": "https://github.com/LonelyIceProject/mod-lonelyice-tactics",
+  "locales": [ "en", "ru" ],
   "core": { "abi": "lonelyice-ac-2" },
   "platforms": [ "windows-x64" ],
   "depends": { "playerbots": ">=1.0.0" },
